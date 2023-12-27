@@ -1,4 +1,10 @@
-<h1 class="text-3xl font-bold underline">Hello world!</h1>
+<script>
+	export let data;
+</script>
+
+<h1 class="text-3xl font-bold underline">{data.site}</h1>
+<h1 class="text-3xl font-bold underline">{data.email}</h1>
+<h1 class="text-3xl font-bold underline">{data.github}</h1>
 
 <style lang="postcss">
 	:global(html) {

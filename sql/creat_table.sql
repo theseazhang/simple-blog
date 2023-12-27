@@ -7,3 +7,10 @@ create table
     created_at timestamp with time zone,
     updated_at timestamp with time zone
   );
+
+  create table
+  json_table (
+    id bigint primary key generated always as identity,
+    key text,
+    data jsonb
+  );
