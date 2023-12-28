@@ -9,10 +9,10 @@
 	<a href="/about">About</a>
 </header>
 
-<main class="container mx-auto my-20">
+<main class="container mx-auto my-10">
 	<slot />
 </main>
 
-<footer class="container mx-auto my-20 text-center">
-	© 2023 {data.copyright}
+<footer class="container mx-auto my-10 text-center">
+	© 2023 {data.blog.copyright}
 </footer>
