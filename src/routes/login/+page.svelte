@@ -5,27 +5,22 @@
 </script>
 
 <svelte:head>
-	<title>Publish - {data.blog.site}</title>
+	<title>Login - {data.blog.site}</title>
 	<meta name="description" content="This is where the description goes for SEO" />
 </svelte:head>
 
-<h1 class="text-3xl font-bold">Publish a new post</h1>
+<h1 class="text-3xl font-bold">Login</h1>
 
 <section class="my-10">
 	<form class="flex flex-col gap-5" method="POST" use:enhance>
 		<div class="flex flex-col gap-2">
-			<label for="title">title:</label>
-			<input id="title" name="title" required value={data.title || ''} />
+			<label for="email">Email:</label>
+			<input id="email" name="email" type="email" required />
 		</div>
 
 		<div class="flex flex-col gap-2">
-			<label for="detail">detail:</label>
-			<textarea id="detail" name="detail" required rows="10">{data.content || ''}</textarea>
-		</div>
-
-		<div class="flex flex-col gap-2">
-			<label for="tags">tags:</label>
-			<input id="tags" name="tags" />
+			<label for="password">Password:</label>
+			<input id="password" name="password" type="password" required />
 		</div>
 
 		<div class="flex flex-col gap-2">
