@@ -1,18 +1,20 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { supabase } from "$lib/supabaseClient";
+/** @type {import('./$types').Actions} */
 
 export const actions = {
-	default: async ({request}) => {
+	default: async ({request, locals: { supabase }}) => {
         const data = await request.formData();
         const email = data.get('email')
-        const password = data.get('password')
-        
-        const res = await supabase.from('blog_post').insert({email, password}).select('id').single()
+        const password = data.get('password') 
+  
+        const res = await supabase.auth.signInWithPassword({email, password})
         
         if(res.error) {
             return fail(422, {
-                error: res.error
+                error: res.error.message
             });
         }
+
+        redirect(302, '/');
 	}
 };

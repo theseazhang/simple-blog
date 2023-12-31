@@ -1,9 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { supabase } from "$lib/supabaseClient";
 import { error } from '@sveltejs/kit';
 
 export const actions = {
-	default: async ({request, url}) => {
+	default: async ({request, url, locals: { supabase }}) => {
         const blogid = url.searchParams.get('id')
         const data = await request.formData();
         const title = data.get('title')
@@ -38,7 +37,7 @@ export const actions = {
 	}
 };
 
-export async function load({url}) {
+export async function load({url, locals: { supabase }}) {
 	const id = url.searchParams.get('id')
     if(!id) return {};
 

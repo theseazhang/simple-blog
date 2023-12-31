@@ -1,5 +1,7 @@
 <script>
 	export let data;
+	let { supabase } = data;
+	$: ({ supabase } = data);
 </script>
 
 <svelte:head>
