@@ -5,6 +5,9 @@
 	export let form;
 	let { post, blog } = data;
 	let today = dateToString(new Date());
+	if (post.created_at) {
+		today = dateToString(new Date(post.created_at));
+	}
 </script>
 
 <svelte:head>
@@ -28,7 +31,7 @@
 
 		<div class="flex flex-col gap-2">
 			<label for="author">author:</label>
-			<input id="author" name="author" value="dylan zhang" />
+			<input id="author" name="author" value={post.author || 'dylan zhang'} />
 		</div>
 
 		<div class="flex flex-col gap-2">

@@ -8,7 +8,7 @@ export const actions = {
         const title = data.get('title')
         const content = data.get('content')
         const author = data.get('author')
-        const created_at = new Date(data.get('created_at'))
+        const created_at = data.get('created_at')
         const tags = data.get('tags')
 
         const session = await getSession()
@@ -18,9 +18,10 @@ export const actions = {
         if(postid) {
             const res = await supabase.from('blog_post').
             update({
+                created_at: new Date(created_at),
                 updated_at: new Date(),
                 title,
-                content, 
+                content,
                 author
             }).eq('id', postid).select('id').single()
             
@@ -33,7 +34,7 @@ export const actions = {
             redirect(302, `/post/${postid}`);
         } else {
             const res = await supabase.from('blog_post').
-            insert({title, content, author_id, author, created_at}).select('id').single()
+            insert({title, content, author_id, author, created_at: new Date(created_at)}).select('id').single()
         
             if(res.error) {
                 return fail(422, {
