@@ -2,10 +2,10 @@ import { fail, redirect } from '@sveltejs/kit';
 /** @type {import('./$types').Actions} */
 
 export const actions = {
-	default: async ({request, locals: { supabase }}) => {
+	default: async ({request, locals: { supabase, session }}) => {
         const data = await request.formData();
         const email = data.get('email')
-        const password = data.get('password') 
+        const password = data.get('password')
   
         const res = await supabase.auth.signInWithPassword({email, password})
         

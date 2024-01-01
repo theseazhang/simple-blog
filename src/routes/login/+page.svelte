@@ -30,7 +30,7 @@
 
 			{#if form?.error}
 				<div class="text-red-500">
-					{form?.error.message}
+					{form?.error}
 				</div>
 			{/if}
 		</div>

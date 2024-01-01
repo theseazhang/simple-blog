@@ -1,11 +1,14 @@
 <script>
 	import { enhance } from '$app/forms';
+	import { dateToString } from '$lib/tools';
 	export let data;
 	export let form;
+	let { post, blog } = data;
+	let today = dateToString(new Date());
 </script>
 
 <svelte:head>
-	<title>Publish - {data.blog.site}</title>
+	<title>Publish - {blog.site}</title>
 	<meta name="description" content="This is where the description goes for SEO" />
 </svelte:head>
 
@@ -15,12 +18,22 @@
 	<form class="flex flex-col gap-5" method="POST" use:enhance>
 		<div class="flex flex-col gap-2">
 			<label for="title">title:</label>
-			<input id="title" name="title" required value={data.title || ''} />
+			<input id="title" name="title" required value={post?.title || ''} />
 		</div>
 
 		<div class="flex flex-col gap-2">
-			<label for="detail">detail:</label>
-			<textarea id="detail" name="detail" required rows="10">{data.content || ''}</textarea>
+			<label for="created_at">created_at:</label>
+			<input id="created_at" name="created_at" value={today} />
+		</div>
+
+		<div class="flex flex-col gap-2">
+			<label for="author">author:</label>
+			<input id="author" name="author" value="dylan zhang" />
+		</div>
+
+		<div class="flex flex-col gap-2">
+			<label for="content">content:</label>
+			<textarea id="content" name="content" required rows="10">{post?.content || ''}</textarea>
 		</div>
 
 		<div class="flex flex-col gap-2">
@@ -35,7 +48,7 @@
 
 			{#if form?.error}
 				<div class="text-red-500">
-					{form?.error.message}
+					{form?.error}
 				</div>
 			{/if}
 		</div>

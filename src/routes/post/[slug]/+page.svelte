@@ -1,16 +1,28 @@
 <script>
 	export let data;
-	let { post, session } = data;
+	let { blog, post, session, supabase } = data;
+
+	import { goto } from '$app/navigation';
+
+	const deletePost = async () => {
+		const { error } = await supabase.from('blog_post').delete().eq('id', post.id);
+		if (error) {
+			console.error(error.message);
+		} else {
+			goto('/');
+		}
+	};
 </script>
 
 <svelte:head>
-	<title>{post.title} - {data.blog.site}</title>
+	<title>{post.title} - {blog.site}</title>
 	<meta name="description" content="This is where the description goes for SEO" />
 </svelte:head>
 
-{#if session?.user?.id === post.user_id}
-	<section class="my-10">
-		<a href="/publish?id={post.id}">edit this post</a>
+{#if session?.user?.id === post.author_id}
+	<section class="my-10 flex gap-5">
+		<a href="/publish?id={post.id}">edit</a>
+		<button on:click={deletePost}>delete</button>
 	</section>
 {/if}
 
