@@ -26,7 +26,7 @@
 	</section>
 {/if}
 
-<section class="prose">
+<section class="prose max-w-none">
 	<h1>{post.title}</h1>
-	<div>{post.content}</div>
+	<div>{@html post.html.code}</div>
 </section>
