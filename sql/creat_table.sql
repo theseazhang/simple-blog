@@ -36,3 +36,8 @@ create table
     key text,
     data jsonb
   );
+
+  create policy "public can select from json_table."
+  on json_table
+  for select       
+  using(true);

@@ -9,10 +9,12 @@
 	<meta name="description" content="This is where the description goes for SEO" />
 </svelte:head>
 
-<h1 class="text-3xl font-bold">Login</h1>
+<h1 class="text-3xl font-bold text-center" style="font-family: &quot;Kaiti SC&quot;, KaiTi;">
+	日拱一卒，功不唐捐。
+</h1>
 
-<section class="my-10">
-	<form class="flex flex-col gap-5" method="POST" use:enhance>
+<section class="my-20">
+	<form class="flex flex-col gap-5 max-w-sm mx-auto" method="POST" use:enhance>
 		<div class="flex flex-col gap-2">
 			<label for="email">Email:</label>
 			<input id="email" name="email" type="email" required />
@@ -24,9 +26,7 @@
 		</div>
 
 		<div class="flex flex-col gap-2">
-			<div>
-				<button class="border px-4 py-2 font-bold" type="submit">Submit</button>
-			</div>
+			<button class="px-4 py-2 font-bol bg-gray-900 text-white" type="submit">Submit</button>
 
 			{#if form?.error}
 				<div class="text-red-500">

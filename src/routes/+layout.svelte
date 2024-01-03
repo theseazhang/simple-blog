@@ -1,32 +1,44 @@
 <script>
 	import '../app.css';
+	import { invalidate, goto } from '$app/navigation';
+
 	export let data;
 
-	let { supabase } = data;
-	$: ({ supabase } = data);
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
 
 	let logout = async () => {
 		await supabase.auth.signOut();
+		let res = await supabase.auth.getSession();
+		data.session = res.data.session;
+		// invalidate('supabase:auth');
+		goto('/');
 	};
 </script>
 
-<header class="container mx-auto my-10 flex gap-5">
-	<a href="/">Home</a>
-	<a href="/publish">Publish</a>
-	<a href="/about">About</a>
-	{#if data.session}
-		<button on:click={logout}>Logout</button>
-	{:else}
-		<a href="/login">Login</a>
-	{/if}
-</header>
-
-<main class="container mx-auto my-10">
+<main class="container mx-auto py-10 min-h-screen flex flex-col max-w-5xl px-5">
 	<slot />
+	<footer class="container mt-auto mx-auto border-t py-10 flex flex-col items-center gap-5">
+		<div>
+			© {new Date().getFullYear()}
+			<a href="/" class="font-bold">{data.blog.copyright}</a>
+		</div>
+		<nav class="flex gap-5 text-sm">
+			<a href="/about">About</a>
+			<a href={data.blog.github}>Github</a>
+			<a href="mailto:{data.blog.email}">Contact</a>
+			{#if session}
+				<a href="/publish">Publish</a>
+				<button on:click={logout}>Logout</button>
+			{:else}
+				<a href="/login" title="Author Login">Login</a>
+			{/if}
+		</nav>
+	</footer>
 </main>
 
-<footer class="container mx-auto my-10 text-center">
-	© 2023 {data.blog.copyright}
-	<h3 class="text-xl font-bold underline">{data.blog.email}</h3>
-	<h3 class="text-xl font-bold underline">{data.blog.github}</h3>
-</footer>
+<style lang="postcss">
+	:global(html) {
+		background-color: theme(colors.gray.100);
+	}
+</style>
