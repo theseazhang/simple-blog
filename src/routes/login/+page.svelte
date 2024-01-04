@@ -26,7 +26,7 @@
 		</div>
 
 		<div class="flex flex-col gap-2">
-			<button class="px-4 py-2 font-bol bg-gray-900 text-white" type="submit">Submit</button>
+			<button class="px-4 py-2 font-bold bg-gray-900 text-white" type="submit">Submit</button>
 
 			{#if form?.error}
 				<div class="text-red-500">

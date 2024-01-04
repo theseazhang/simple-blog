@@ -1,5 +1,4 @@
-import { fail, redirect } from '@sveltejs/kit';
-import { error } from '@sveltejs/kit';
+import { fail, redirect, error } from '@sveltejs/kit';
 
 export const actions = {
 	default: async ({request, url, locals: { supabase, getSession }}) => {
