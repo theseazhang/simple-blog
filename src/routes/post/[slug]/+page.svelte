@@ -1,6 +1,5 @@
 <script>
 	export let data;
-	export let form;
 	let { blog, session, supabase, post } = data;
 	const { title, author, content, created_at } = data.post;
 	$: ({ supabase, session } = data);
@@ -19,6 +18,7 @@
 	};
 
 	let isEditing = false;
+	let err = null;
 
 	let cancelHandle = async () => {
 		//恢复初始值
@@ -30,25 +30,37 @@
 	};
 
 	let submitHandle = async () => {
-		console.log(post);
-		return;
-		const res = await supabase
+		//验证是否有变更
+		if (
+			post.title === title &&
+			post.author === author &&
+			post.content === content &&
+			post.created_at === created_at
+		) {
+			isEditing = false;
+			return;
+		}
+
+		const { error } = await supabase
 			.from('blog_post')
 			.update({
-				created_at: new Date(data.get('created_at')),
+				created_at: new Date(post.created_at),
 				updated_at: new Date(),
-				title: data.get('title'),
-				content: data.get('content'),
-				author: data.get('author')
+				title: post.title,
+				content: post.content,
+				author: post.author
 			})
-			.eq('id', post.id)
-			.select('id')
-			.single();
+			.eq('id', post.id);
 
-		if (res.error) {
-			return fail(422, {
-				error: res.error.message
-			});
+		if (error) {
+			err = error.message;
+		} else {
+			//重新加载页面
+			if (post.content !== content) {
+				alert('文章内容有更新，重新加载页面');
+				location.reload();
+			}
+			isEditing = false;
 		}
 	};
 </script>
@@ -59,7 +71,7 @@
 </svelte:head>
 
 {#if isEditing}
-	<EditForm {post} {form} {cancelHandle} {submitHandle} />
+	<EditForm {post} {err} {cancelHandle} {submitHandle} />
 {:else}
 	<section class="flex flex-col gap-5">
 		<div class="border-b pb-10 border-black">
@@ -78,14 +90,8 @@
 				</div>
 			</div>
 
-			<div class="text-gray-700 flex gap-5">
-				<div class="flex gap-1 items-center">
-					<Users size="20" /> 3257
-				</div>
-				<div class="flex gap-1 items-center">
-					<Heart size="20" /> 85
-				</div>
-				{#if session?.user?.id === post.author_id}
+			{#if session?.user?.id === post.author_id}
+				<div class="text-gray-700 flex gap-5">
 					<div class="flex gap-1 items-center">
 						<button
 							on:click={() => {
@@ -98,8 +104,8 @@
 					<div class="flex gap-1 items-center">
 						<button on:click={deletePost}><Trash size="20" /></button>
 					</div>
-				{/if}
-			</div>
+				</div>
+			{/if}
 		</div>
 
 		<div class="prose max-w-none mb-20 my-10">{@html post.html}</div>

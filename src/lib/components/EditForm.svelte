@@ -1,6 +1,6 @@
 <script>
 	export let post;
-	export let form;
+	export let err;
 	export let cancelHandle;
 	export let submitHandle;
 </script>
@@ -24,7 +24,7 @@
 
 		<div class="flex flex-col gap-2">
 			<label for="content">content:</label>
-			<textarea id="content" name="content" required rows="10" bind:value={post.content}></textarea>
+			<textarea id="content" name="content" required rows="20" bind:value={post.content}></textarea>
 		</div>
 
 		<div class="flex flex-col gap-2">
@@ -40,10 +40,8 @@
 				<button class="btn-secondary w-1/4" type="button" on:click={cancelHandle}>Cancel</button>
 			</div>
 
-			{#if form?.error}
-				<div class="text-red-500">
-					{form?.error}
-				</div>
+			{#if err}
+				<div class="text-red-500">{err}</div>
 			{/if}
 		</div>
 	</form>
