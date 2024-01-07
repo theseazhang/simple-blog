@@ -1,21 +1,14 @@
 <script>
 	import { enhance } from '$app/forms';
-	import { dateToString, getClipboardContents } from '$lib/tools';
+	import UploadFile from '$lib/components/UploadFile.svelte';
+	import { dateToString } from '$lib/tools';
 
-	export let data;
 	export let form;
-	let { blog } = data;
-	let today = dateToString(new Date());
+	export let data;
+	let { blog, supabase } = data;
+	$: ({ supabase } = data);
 
-	const uploadFile = async () => {
-		const file = await getClipboardContents();
-		// const res = await supabase.storage
-		// 	.from('blogfiles')
-		// 	.upload('avatar1.png', decode('base64FileData'), {
-		// 		contentType: 'image/png'
-		// 	});
-		// console.log(res);
-	};
+	let today = dateToString(new Date());
 </script>
 
 <svelte:head>
@@ -35,10 +28,7 @@
 		</div>
 
 		<div class="flex flex-col gap-2">
-			<div class="flex gap-2">
-				<input id="file" class="flex-grow" type="file" value="" />
-				<button type="button" class="btn-secondary" on:click={uploadFile}>upload file</button>
-			</div>
+			<UploadFile {supabase} />
 			<textarea id="content" name="content" required rows="20"></textarea>
 		</div>
 

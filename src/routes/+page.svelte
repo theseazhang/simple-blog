@@ -1,5 +1,6 @@
 <script>
 	export let data;
+	import { dateToString } from '$lib/tools';
 </script>
 
 <svelte:head>
@@ -14,7 +15,10 @@
 
 	<div class="my-10 flex flex-col gap-10">
 		{#each data.posts as post}
-			<a href="/post/{post.id}">{post.title}</a>
+			<div class="">
+				<span class="text-gray-500 mr-2">[{dateToString(new Date(post.created_at))}]</span>
+				<a href="/post/{post.id}" class="text-2xl">{post.title}</a>
+			</div>
 		{/each}
 	</div>
 </section>
