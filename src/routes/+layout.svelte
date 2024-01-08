@@ -1,6 +1,7 @@
 <script>
 	import '../app.css';
 	import { invalidate, goto } from '$app/navigation';
+	import { Mail, Github, LogIn, LogOut, PenSquare, UserRound } from 'lucide-svelte';
 
 	export let data;
 
@@ -16,29 +17,24 @@
 	};
 </script>
 
-<main class="container mx-auto py-10 min-h-screen flex flex-col max-w-5xl px-5">
+<main class="container mx-auto flex min-h-screen max-w-5xl flex-col px-5 py-10">
 	<slot />
-	<footer class="container mt-auto mx-auto border-t py-10 flex flex-col items-center gap-5">
-		<div>
-			© {new Date().getFullYear()}
-			<a href="/" class="font-bold">{data.blog.copyright}</a>
-		</div>
-		<nav class="flex gap-5 text-sm">
-			<a href="/about">About</a>
-			<a href={data.blog.github}>Github</a>
-			<a href="mailto:{data.blog.email}">Contact</a>
-			{#if session}
-				<a href="/publish">Publish</a>
-				<button on:click={logout}>Logout</button>
-			{:else}
-				<a href="/login" title="Author Login">Login</a>
-			{/if}
-		</nav>
-	</footer>
 </main>
 
-<style lang="postcss">
-	:global(html) {
-		background-color: theme(colors.gray.100);
-	}
-</style>
+<footer class="flex flex-col items-center gap-10 bg-blue-600 py-10 text-white/90 md:py-16 lg:py-20">
+	<div class="flex items-center gap-2 text-lg">
+		<div>© {new Date().getFullYear()}</div>
+		<a href="/" class="hover:text-white">{data.blog.copyright}</a>
+	</div>
+	<nav class="flex gap-10 text-sm sm:gap-12 lg:gap-20">
+		<a href="/about" class="hover:text-white"><UserRound /></a>
+		<a href={data.blog.github} class="hover:text-white"><Github /></a>
+		<a href="mailto:{data.blog.email}" class="hover:text-white"><Mail /></a>
+		{#if session}
+			<a href="/publish" class="hover:text-white"><PenSquare /></a>
+			<button on:click={logout} class="hover:text-white"><LogOut /></button>
+		{:else}
+			<a href="/login" title="Author Login" class="hover:text-white"><LogIn /></a>
+		{/if}
+	</nav>
+</footer>

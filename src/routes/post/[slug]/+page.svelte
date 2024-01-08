@@ -5,7 +5,7 @@
 	$: ({ supabase, session } = data);
 
 	import { goto } from '$app/navigation';
-	import { Calendar, User, Pencil, Trash, Heart, Users } from 'lucide-svelte';
+	import { Calendar, UserRound, Pencil, Trash, Heart, Users } from 'lucide-svelte';
 	import EditForm from '$lib/components/EditForm.svelte';
 
 	const deletePost = async () => {
@@ -74,25 +74,27 @@
 	<EditForm {post} {err} {cancelHandle} {submitHandle} />
 {:else}
 	<section class="flex flex-col gap-5">
-		<div class="border-b pb-10 border-black">
-			<h1 class="text-4xl font-bold">{post.title}</h1>
+		<div class="border-b border-black pb-10">
+			<h1 class="text-4xl font-bold text-blue-600">
+				{post.title}
+			</h1>
 		</div>
 
 		<div class="flex flex-col justify-between gap-5 md:flex-row">
-			<div class="text-gray-700 flex gap-5">
-				<div class="flex gap-1 items-center">
-					<User size="20" />
+			<div class="flex gap-5 text-gray-700">
+				<div class="flex items-center gap-1">
+					<UserRound size="20" />
 					{post.author}
 				</div>
-				<div class="flex gap-1 items-center">
+				<div class="flex items-center gap-1">
 					<Calendar size="20" />
 					{post.created_at}
 				</div>
 			</div>
 
 			{#if session?.user?.id === post.author_id}
-				<div class="text-gray-700 flex gap-5">
-					<div class="flex gap-1 items-center">
+				<div class="flex gap-5 text-gray-700">
+					<div class="flex items-center gap-1">
 						<button
 							on:click={() => {
 								isEditing = !isEditing;
@@ -101,13 +103,13 @@
 							<Pencil size="20" />
 						</button>
 					</div>
-					<div class="flex gap-1 items-center">
+					<div class="flex items-center gap-1">
 						<button on:click={deletePost}><Trash size="20" /></button>
 					</div>
 				</div>
 			{/if}
 		</div>
 
-		<div class="prose max-w-none mb-20 my-10">{@html post.html}</div>
+		<div class="prose my-10 mb-20 max-w-none">{@html post.html}</div>
 	</section>
 {/if}

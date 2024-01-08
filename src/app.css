@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+	@apply selection:bg-blue-600 selection:text-white/90;
+}
+
 .btn {
-	@apply px-4 py-2 font-bold bg-gray-900 text-white;
+	@apply bg-gray-900 px-4 py-2 font-bold text-white;
 }
 
 .btn-secondary {
-	@apply px-4 py-2 font-bold bg-white text-black border border-black;
+	@apply border border-black bg-white px-4 py-2 font-bold text-black;
 }
